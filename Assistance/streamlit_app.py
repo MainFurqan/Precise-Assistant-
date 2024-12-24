@@ -108,7 +108,7 @@ def get_conversation_chain(vectorstore):
     # Use HuggingFaceHub LLM
     llm = HuggingFaceHub(
         repo_id="meta-llama/Llama-3.2-3B-Instruct",
-        model_kwargs={"temperature": 0},
+        model_kwargs={"temperature": 0, "max_length": 512},
         huggingfacehub_api_token=st.secrets["HUGGINGFACE_API_TOKEN"]
     )
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)

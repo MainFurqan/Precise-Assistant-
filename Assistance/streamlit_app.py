@@ -16,7 +16,7 @@ import json
 HUGGINGFACE_API_TOKEN = st.secrets["HUGGINGFACE_API_TOKEN"]
 
 # Define Hugging Face model and endpoint
-HUGGINGFACE_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
+HUGGINGFACE_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
 API_URL = f"https://api-inference.huggingface.co/models/{HUGGINGFACE_MODEL}"
 HEADERS = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
 
@@ -107,8 +107,8 @@ def get_vectorstore(text_chunks):
 def get_conversation_chain(vectorstore):
     # Use HuggingFaceHub LLM
     llm = HuggingFaceHub(
-        repo_id="meta-llama/Llama-3.3-70B-Instruct",
-        model_kwargs={"temperature": 0, "max_length": 512},
+        repo_id="meta-llama/Llama-3.2-3B-Instruct",
+        model_kwargs={"temperature": 0},
         huggingfacehub_api_token=st.secrets["HUGGINGFACE_API_TOKEN"]
     )
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)

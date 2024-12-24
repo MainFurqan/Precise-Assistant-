@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from PyPDF2 import PdfReader
 import docx
-from langchain.llm import HuggingFaceHub
+from langchain.llms import HuggingFaceHub
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS

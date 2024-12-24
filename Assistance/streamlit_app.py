@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from PyPDF2 import PdfReader
 import docx
+from langchain.llm import HuggingFaceHub
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
@@ -104,9 +105,15 @@ def get_vectorstore(text_chunks):
     return knowledge_base
 
 def get_conversation_chain(vectorstore):
-    memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
+    # Use HuggingFaceHub LLM
+    llm = HuggingFaceHub(
+        repo_id="meta-llama/Llama-3.3-70B-Instruct",
+        model_kwargs={"temperature": 0, "max_length": 512},
+        huggingfacehub_api_token=st.secrets["HUGGINGFACE_API_TOKEN"]
+    )
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
-        llm=lambda query: query_huggingface_model(query),
+        llm=llm,
         retriever=vectorstore.as_retriever(),
         memory=memory
     )
